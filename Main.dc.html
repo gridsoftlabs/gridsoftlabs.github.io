@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gridsoft</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anta&amp;family=Cairo:wght@300&amp;family=Rajdhani:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0}
+.gs-root{--bg:#FFFFFF;--panel:#FFFFFF;--ink:#0E1116;--ink-2:#465061;--ink-3:#5E6878;--line:#D3D9E2;--line-strong:#8A95A5;--grid-minor:rgba(43,89,195,0.05);--grid-major:rgba(43,89,195,0.10);--accent:#2B59C3;--accent-ink:#1E46A3;--accent-soft:rgba(43,89,195,0.07);--trace:rgba(43,89,195,0.35);--glow:rgba(43,89,195,0.18);--obp:#7E1DFB}
+.gs-root.gs-dark{--bg:#16181C;--panel:#1A1D22;--ink:#E7EAEE;--ink-2:#AEB6C2;--ink-3:#9AA3B0;--line:#2B3038;--line-strong:#4A525E;--grid-minor:rgba(127,167,255,0.045);--grid-major:rgba(127,167,255,0.09);--accent:#7FA7FF;--accent-ink:#A9C3FF;--accent-soft:rgba(127,167,255,0.09);--trace:rgba(127,167,255,0.38);--glow:rgba(127,167,255,0.22);--obp:#B48AFD}
+@media (prefers-color-scheme: dark){.gs-root.gs-auto{--bg:#16181C;--panel:#1A1D22;--ink:#E7EAEE;--ink-2:#AEB6C2;--ink-3:#9AA3B0;--line:#2B3038;--line-strong:#4A525E;--grid-minor:rgba(127,167,255,0.045);--grid-major:rgba(127,167,255,0.09);--accent:#7FA7FF;--accent-ink:#A9C3FF;--accent-soft:rgba(127,167,255,0.09);--trace:rgba(127,167,255,0.38);--glow:rgba(127,167,255,0.22);--obp:#B48AFD}}
+.gs-root{background:var(--bg);color:var(--ink);font-family:'Rajdhani',system-ui,sans-serif;font-weight:500}
+.gs-grid{background-image:linear-gradient(var(--grid-major) 1px,transparent 1px),linear-gradient(90deg,var(--grid-major) 1px,transparent 1px),linear-gradient(var(--grid-minor) 1px,transparent 1px),linear-gradient(90deg,var(--grid-minor) 1px,transparent 1px);background-size:120px 120px,120px 120px,24px 24px,24px 24px;background-position:-1px -1px}
+.gs-ruler{height:14px;background-image:repeating-linear-gradient(90deg,var(--line-strong) 0 1px,transparent 1px 24px),repeating-linear-gradient(90deg,var(--line) 0 1px,transparent 1px 6px);background-size:100% 14px,100% 6px;background-repeat:no-repeat;background-position:0 0,0 8px}
+.gs-mark{position:relative}
+.gs-mark::before,.gs-mark::after{content:"";position:absolute;width:14px;height:14px;border-color:var(--accent);border-style:solid;pointer-events:none;z-index:2}
+.gs-mark::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.gs-mark::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.gs-h{position:absolute;height:1.5px;background:var(--trace)}
+.gs-v{position:absolute;width:1.5px;background:var(--trace)}
+.gs-n{position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border:1.5px solid var(--accent);background:var(--bg);box-sizing:border-box}
+.gs-n.on{background:var(--accent);box-shadow:0 0 0 6px var(--glow)}
+.gs-ring{position:absolute;border-radius:50%;border:1px solid var(--trace);box-sizing:border-box}
+.gs-pkt{position:absolute;width:24px;height:3px;margin-top:-0.75px;background:var(--accent);border-radius:2px}
+.gs-pkt.x1{animation:gs-run-x 6s linear infinite}
+.gs-pkt.x2{animation:gs-run-x 8s linear infinite 2s}
+.gs-pkt.y1{width:3px;height:24px;margin:0 0 0 -0.75px;animation:gs-run-y 7s linear infinite 1s}
+.gs-pulse{animation:gs-pulse 3.2s ease-in-out infinite}
+.gs-sweep{position:absolute;border-radius:50%;background:conic-gradient(from 0deg,var(--glow),transparent 25%);animation:gs-spin 12s linear infinite}
+@keyframes gs-run-x{0%{transform:translateX(0);opacity:0}8%{opacity:1}92%{opacity:1}100%{transform:translateX(var(--run,400px));opacity:0}}
+@keyframes gs-run-y{0%{transform:translateY(0);opacity:0}8%{opacity:1}92%{opacity:1}100%{transform:translateY(var(--run,200px));opacity:0}}
+@keyframes gs-pulse{0%,100%{box-shadow:0 0 0 4px var(--glow)}50%{box-shadow:0 0 0 12px transparent}}
+@keyframes gs-spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion: reduce){.gs-pkt,.gs-pulse,.gs-sweep{animation:none}.gs-pkt{opacity:0}}
+a{color:var(--ink)}a:hover{color:var(--accent-ink)}
+.gs-nav a{text-decoration:none;color:var(--ink-2)}.gs-nav a:hover{color:var(--ink)}
+.gs-more{text-decoration:none;border-bottom:1.5px solid var(--accent);padding-bottom:4px}
+.gs-more:hover{color:var(--accent-ink)}
+.gs-foot a{text-decoration:none;color:var(--ink-2)}.gs-foot a:hover{color:var(--ink)}
+</style>
+</helmet>
+<div class="gs-root gs-grid {{themeClass}}" style="min-height: 100vh; width: 100%; box-sizing: border-box">
+
+<header style="border-bottom: 1px solid var(--line); background: var(--bg)">
+<div style="max-width: 1280px; margin: 0 auto; padding: 22px 40px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+<a href="#top" aria-label="Gridsoft home" style="text-decoration: none; color: var(--ink); font-family: 'Anta', sans-serif; font-size: 28px; letter-spacing: 0.05em; line-height: 1">GRIDSOFT</a>
+<nav class="gs-nav" aria-label="Main" style="display: flex; flex-wrap: wrap; align-items: center; gap: 32px; font-size: 17px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase">
+<a href="#obsidian-pay" style="min-height: 44px; display: inline-flex; align-items: center">Obsidian Pay</a>
+<a href="#company" style="min-height: 44px; display: inline-flex; align-items: center">Company</a>
+<a href="#contact" style="min-height: 44px; display: inline-flex; align-items: center">Contact</a>
+</nav>
+</div>
+</header>
+
+<section id="top" style="border-bottom: 1px solid var(--line)">
+<div class="gs-ruler" aria-hidden="true" style="max-width: 1280px; margin: 0 auto"></div>
+<div style="max-width: 1280px; margin: 0 auto; padding: 120px 40px 72px; display: flex; flex-direction: column; gap: 36px">
+<h1 style="margin: 0; max-width: 1100px; font-size: clamp(52px, 8.4vw, 124px); line-height: 0.92; font-weight: 700; letter-spacing: -0.015em; text-transform: uppercase">Building the rails for Caribbean commerce.</h1>
+<p style="margin: 0; max-width: 560px; font-size: 22px; line-height: 1.45; color: var(--ink-2)">Gridsoft makes the software and hardware that let people and businesses pay, get paid and move money across the region.</p>
+</div>
+
+<div style="margin: 0 auto; max-width: 1280px; padding: 0 40px 104px; box-sizing: border-box">
+<div class="gs-mark" aria-hidden="true" style="position: relative; height: 380px; border: 1px solid var(--line-strong); background: var(--panel); overflow: hidden">
+<div class="gs-grid" style="position: absolute; inset: 0"></div>
+
+<div style="position: absolute; left: 4%; right: 4%; top: 22px; display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; letter-spacing: 0.16em; color: var(--ink-3)">
+<span style="width: 1px; height: 10px; background: var(--ink-3)"></span><span style="flex: 1; height: 1px; background: var(--ink-3)"></span><span>SYSTEM · REV A</span><span style="flex: 1; height: 1px; background: var(--ink-3)"></span><span style="width: 1px; height: 10px; background: var(--ink-3)"></span>
+</div>
+
+<div style="position: absolute; left: 4%; top: 22%; width: 17%; height: 56px; border: 1.5px solid var(--ink); background: var(--panel); box-sizing: border-box; padding: 0 14px; display: flex; align-items: center; font-size: 18px; font-weight: 700; letter-spacing: 0.06em">INPUT 01</div>
+<div style="position: absolute; left: 4%; top: calc(50% - 28px); width: 17%; height: 56px; border: 1.5px solid var(--ink); background: var(--panel); box-sizing: border-box; padding: 0 14px; display: flex; align-items: center; font-size: 18px; font-weight: 700; letter-spacing: 0.06em">INPUT 02</div>
+<div style="position: absolute; left: 4%; bottom: 14%; width: 17%; height: 56px; border: 1.5px solid var(--ink); background: var(--panel); box-sizing: border-box; padding: 0 14px; display: flex; align-items: center; font-size: 18px; font-weight: 700; letter-spacing: 0.06em">INPUT 03</div>
+<div style="position: absolute; left: 31%; top: calc(50% - 28px); width: 15%; height: 56px; border: 1.5px solid var(--ink); background: var(--panel); box-sizing: border-box; padding: 0 14px; display: flex; align-items: center; font-size: 18px; font-weight: 700; letter-spacing: 0.06em">ROUTER</div>
+<div style="position: absolute; left: 54%; top: calc(50% - 44px); width: 16%; height: 88px; border: 1.5px solid var(--accent); background: var(--accent-soft); box-sizing: border-box; padding: 0 14px; display: flex; align-items: center; justify-content: center; font-size: 21px; font-weight: 700; letter-spacing: 0.06em; color: var(--accent-ink)">CORE</div>
+<div style="position: absolute; right: 4%; top: 22%; width: 17%; height: 56px; border: 1.5px solid var(--ink); background: var(--panel); box-sizing: border-box; padding: 0 14px; display: flex; align-items: center; font-size: 18px; font-weight: 700; letter-spacing: 0.06em">CACHE</div>
+<div style="position: absolute; right: 4%; bottom: 14%; width: 17%; height: 56px; border: 1.5px solid var(--ink); background: var(--panel); box-sizing: border-box; padding: 0 14px; display: flex; align-items: center; font-size: 18px; font-weight: 700; letter-spacing: 0.06em">ARRAY</div>
+
+<div style="position: absolute; left: 21%; width: 5%; top: calc(22% + 27px); height: 2px; background: var(--ink-3)"></div>
+<div style="position: absolute; left: 21%; width: 5%; bottom: calc(14% + 27px); height: 2px; background: var(--ink-3)"></div>
+<div style="position: absolute; left: 26%; width: 2px; top: calc(22% + 27px); bottom: calc(14% + 27px); background: var(--ink-3)"></div>
+<div style="position: absolute; left: 21%; width: 10%; top: calc(50% - 1px); height: 2px; background: var(--ink-3)"></div>
+<div style="position: absolute; left: 46%; width: 8%; top: calc(50% - 1px); height: 2px; background: var(--accent)"></div>
+<div style="position: absolute; left: 70%; width: 4.5%; top: calc(50% - 1px); height: 2px; background: var(--accent)"></div>
+<div style="position: absolute; left: 74.5%; width: 2px; top: calc(22% + 27px); bottom: calc(14% + 27px); background: var(--accent)"></div>
+<div style="position: absolute; left: 74.5%; width: 4.5%; top: calc(22% + 27px); height: 2px; background: var(--accent)"></div>
+<div style="position: absolute; left: 74.5%; width: 4.5%; bottom: calc(14% + 27px); height: 2px; background: var(--accent)"></div>
+
+<span style="position: absolute; left: 4%; bottom: 14px; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; color: var(--ink-3)">X 000 · Y 000</span>
+<span style="position: absolute; right: 4%; bottom: 14px; font-size: 11px; font-weight: 600; letter-spacing: 0.16em; color: var(--ink-3)">SCALE 1:1</span>
+</div>
+</div>
+</section>
+
+<section id="company" aria-labelledby="co-title" style="border-bottom: 1px solid var(--line)">
+<div style="max-width: 1280px; margin: 0 auto; padding: 128px 40px; display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-start">
+<h2 id="co-title" style="flex: 1 1 380px; margin: 0; font-size: clamp(40px, 5vw, 68px); line-height: 0.95; font-weight: 700; text-transform: uppercase">End to end.</h2>
+<div style="flex: 2 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 28px">
+<p style="margin: 0; font-size: 26px; line-height: 1.4; font-weight: 600; color: var(--ink)">GRIDSOFT Ltd. is a Belizean technology company. We design, develop and license software, hardware and the technology that connects them, and we run what we build ourselves.</p>
+<p style="margin: 0; font-size: 20px; line-height: 1.55; color: var(--ink-2)">Everything is engineered in-house, from the servers to the screens, so the people who answer for a product are the people who built it.</p>
+<p style="margin: 0; font-size: 20px; line-height: 1.55; color: var(--ink-2)">We build regulated products the regulated way. We work with Belize's financial regulators, and we do not offer any service that needs a licence until we hold it.</p>
+<dl style="margin: 8px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px 24px">
+<div style="display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--line-strong); padding-top: 12px"><dt style="font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3)">Company</dt><dd style="margin: 0; font-size: 19px; font-weight: 700">GRIDSOFT Ltd.</dd></div>
+<div style="display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--line-strong); padding-top: 12px"><dt style="font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3)">Type</dt><dd style="margin: 0; font-size: 19px; font-weight: 700">Private company limited by shares</dd></div>
+<div style="display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--line-strong); padding-top: 12px"><dt style="font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3)">Registered in</dt><dd style="margin: 0; font-size: 19px; font-weight: 700">Belmopan, Belize</dd></div>
+<div style="display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--line-strong); padding-top: 12px"><dt style="font-size: 13px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3)">Company No.</dt><dd style="margin: 0; font-size: 19px; font-weight: 700">[COMPANY NUMBER]</dd></div>
+</dl>
+<p style="margin: 12px 0 0; font-size: 26px; line-height: 1.4; font-weight: 600; color: var(--ink)">Our work starts with payments.</p>
+<div><a href="#obsidian-pay" class="gs-more" style="font-size: 17px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase">Meet our first product <span aria-hidden="true">↓</span></a></div>
+</div>
+</div>
+</section>
+
+<section id="obsidian-pay" aria-labelledby="op-title" style="border-bottom: 1px solid var(--line)">
+<div style="max-width: 1280px; margin: 0 auto; padding: 128px 40px; display: flex; flex-wrap: wrap; gap: 64px; align-items: center">
+<div style="flex: 1 1 460px; min-width: 0; display: flex; flex-direction: column; gap: 28px">
+<h2 id="op-title" style="margin: 0; font-family: 'Cairo', sans-serif; font-weight: 300; font-size: clamp(52px, 6.4vw, 88px); line-height: 1.05; letter-spacing: -0.03em; color: var(--obp)">Obsidian Pay</h2>
+<p style="margin: 0; font-size: clamp(30px, 3.2vw, 42px); line-height: 1.05; font-weight: 700; text-transform: uppercase">Belize's digital wallet and payment gateway.</p>
+<p style="margin: 0; max-width: 520px; font-size: 20px; line-height: 1.5; color: var(--ink-2)">Send money, pay and get paid, online and in person, from one account.</p>
+<p style="margin: 0; max-width: 520px; font-size: 15px; line-height: 1.5; color: var(--ink-3)">In development. Launch is subject to regulatory approval.</p>
+<div><a href="#contact" class="gs-more" style="font-size: 17px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase">Get launch updates</a></div>
+</div>
+<div class="gs-mark" aria-hidden="true" style="flex: 1 1 420px; min-width: 0; height: 520px; position: relative; border: 1px solid var(--line-strong); background: var(--panel); overflow: hidden">
+<div class="gs-grid" style="position: absolute; inset: 0"></div>
+<div style="position: absolute; left: 50%; top: 50%; width: 236px; height: 440px; margin: -220px 0 0 -118px; border: 2px solid var(--ink); border-radius: 34px; background: var(--panel); box-sizing: border-box; padding: 28px 20px; display: flex; flex-direction: column; gap: 16px">
+<div style="width: 64px; height: 6px; margin: 0 auto 6px; border-radius: 3px; background: var(--line-strong)"></div>
+<div style="height: 12px; width: 40%; background: var(--line)"></div>
+<div style="height: 34px; width: 75%; background: var(--ink)"></div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; padding: 8px 0">
+<div style="height: 48px; border: 1.5px solid var(--accent); background: var(--accent-soft)"></div>
+<div style="height: 48px; border: 1.5px solid var(--line-strong)"></div>
+<div style="height: 48px; border: 1.5px solid var(--line-strong)"></div>
+</div>
+<div style="height: 1px; background: var(--line)"></div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; gap: 10px"><span style="height: 10px; width: 55%; background: var(--line)"></span><span style="height: 10px; width: 20%; background: var(--line-strong)"></span></div>
+<div style="display: flex; justify-content: space-between; gap: 10px"><span style="height: 10px; width: 45%; background: var(--line)"></span><span style="height: 10px; width: 20%; background: var(--line-strong)"></span></div>
+<div style="display: flex; justify-content: space-between; gap: 10px"><span style="height: 10px; width: 60%; background: var(--line)"></span><span style="height: 10px; width: 20%; background: var(--line-strong)"></span></div>
+<div style="display: flex; justify-content: space-between; gap: 10px"><span style="height: 10px; width: 40%; background: var(--line)"></span><span style="height: 10px; width: 20%; background: var(--line-strong)"></span></div>
+</div>
+</div>
+<div style="position: absolute; left: calc(50% + 140px); top: calc(50% - 220px); height: 440px; width: 0; border-left: 1px solid var(--ink-3)"></div>
+<div style="position: absolute; left: calc(50% + 134px); top: calc(50% - 220px); width: 12px; height: 0; border-top: 1px solid var(--ink-3)"></div>
+<div style="position: absolute; left: calc(50% + 134px); top: calc(50% + 220px); width: 12px; height: 0; border-top: 1px solid var(--ink-3)"></div>
+<span style="position: absolute; left: calc(50% + 150px); top: calc(50% - 8px); font-size: 12px; font-weight: 600; letter-spacing: 0.16em; color: var(--ink-3)">H</span>
+<div style="position: absolute; left: calc(50% - 118px); width: 236px; top: calc(50% + 236px); height: 0; border-top: 1px solid var(--ink-3)"></div>
+<span style="position: absolute; left: calc(50% - 5px); top: calc(50% + 242px); font-size: 12px; font-weight: 600; letter-spacing: 0.16em; color: var(--ink-3)">W</span>
+</div>
+</div>
+</section>
+
+<section id="contact" aria-labelledby="ct-title" style="border-bottom: 1px solid var(--line)">
+<div style="max-width: 1280px; margin: 0 auto; padding: 112px 40px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-end; justify-content: space-between">
+<h2 id="ct-title" style="margin: 0; font-size: clamp(36px, 4.4vw, 56px); line-height: 1; font-weight: 700; text-transform: uppercase">Get in touch.</h2>
+<a href="mailto:hello@gridsoft.space" class="gs-more" style="font-size: clamp(22px, 2.4vw, 30px); font-weight: 700; letter-spacing: 0.04em">hello@gridsoft.space</a>
+</div>
+</section>
+
+<footer class="gs-foot" style="background: var(--bg)">
+<div style="max-width: 1280px; margin: 0 auto; padding: 48px 40px 56px; display: flex; flex-direction: column; gap: 40px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 32px">
+<span style="font-family: 'Anta', sans-serif; font-size: 24px; letter-spacing: 0.05em">GRIDSOFT</span>
+<nav aria-label="Footer" style="display: flex; flex-wrap: wrap; gap: 28px; font-size: 16px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase">
+<a href="#obsidian-pay" style="min-height: 44px; display: inline-flex; align-items: center">Obsidian Pay</a>
+<a href="#company" style="min-height: 44px; display: inline-flex; align-items: center">Company</a>
+<a href="#contact" style="min-height: 44px; display: inline-flex; align-items: center">Contact</a>
+</nav>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); border-top: 1px solid var(--line-strong); padding-top: 18px; gap: 12px; font-size: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3)">
+<span>© 2026 GRIDSOFT Ltd.</span>
+<span>Belmopan, Belize</span>
+<span style="text-align: right">Sheet 1 of 1</span>
+</div>
+</div>
+</footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["auto","light","dark"],"default":"auto","section":"Theme"},"$preview":{"width":1440,"height":3100}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const t = this.props.theme ?? 'auto';
+    return { themeClass: t === 'dark' ? 'gs-dark' : (t === 'light' ? 'gs-light' : 'gs-auto') };
+  }
+}
+</script>
+</body>
+</html>
